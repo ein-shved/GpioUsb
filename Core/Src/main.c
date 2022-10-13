@@ -20,6 +20,8 @@
 #include "main.h"
 #include "usb_device.h"
 #include "gpio.h"
+#include "gpiocmd.h"
+#include "usbd_cdc_if.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -94,6 +96,8 @@ int main(void)
   MX_USB_DEVICE_Init();
   /* USER CODE BEGIN 2 */
 
+  GpioCmd_SetResponse(CDC_Transmit_FS);
+  RCC->APB2ENR |= RCC_APB2ENR_IOPCEN; // Without this blinker does not work
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -103,6 +107,7 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+    GpioCmd_Process();
   }
   /* USER CODE END 3 */
 }
